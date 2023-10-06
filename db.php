@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$db = "image-vote";
+$db = "vote";
 
 // Create connection
 $con = mysqli_connect($servername, $username, $password,$db);

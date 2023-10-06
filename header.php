@@ -176,7 +176,7 @@ session_start();
                             <div class="dropdown">
                                 <a href="admin/add_photo.php">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span>Add Photo</span>
+                                    <span>Admin</span>
 
                                 </a>
 
