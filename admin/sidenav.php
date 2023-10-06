@@ -44,7 +44,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="vote_history.php">
                             <i class="material-icons">list</i>
-                            <p>Photo List</p>
+                            <p>Vote History</p>
                         </a>
 
                     </li>

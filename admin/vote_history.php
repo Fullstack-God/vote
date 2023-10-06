@@ -35,7 +35,7 @@ include "topheader.php";
             <div class="col-md-6">
                 <div class="header-search">
                     <form action="" method="POST">
-                        <input class="input" id="search" name="search" type="text" placeholder="Search here"
+                        <input class="input" id="search" name="search" type="text" placeholder="Enter the Full Name!"
                             style="border-radius:20px; width:60%;height:50px;padding-left:15px;">
                         <button type="submit" id="search_btn" name="search_btn" class="search-btn"
                             style="border: none;background-color: unset;"></button>

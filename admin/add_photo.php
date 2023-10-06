@@ -9,7 +9,6 @@ if(isset($_POST['btn_save']))
 $voting_amount=$_POST['voting_amount']*100;
 $description=$_POST['description'];
 $candidate_name=$_POST['candidate_name'];
-$voting_count=$_POST['voting_count'];
 
 
 $stripe = new \Stripe\StripeClient('sk_test_51NtBMlKFUyNj0BfHYrtKvKzTL1kzFzfaKhxkEnWICxakaEv8rDwkt5hgqC7xW3GhUqB7t6PRuNrqd8g4QrlmY1aT00eHZdhD9v');
@@ -41,11 +40,14 @@ if($picture_type=="image/jpeg" || $picture_type=="image/jpg" || $picture_type=="
 		$pic_name=time()."_".$picture_name;
 		move_uploaded_file($picture_tmp_name,"../photo_images/".$pic_name);
 		
-mysqli_query($con,"insert into photos (voting_amount, description,candidate_name,voting_count, photo, product_id, price_id) values 
-('$voting_amount','$description','$candidate_name','$voting_count','$pic_name','$product_id', '$price_id')") or die ("query incorrect");
+mysqli_query($con,"insert into photos (voting_amount, description,candidate_name, photo, product_id, price_id) values 
+('$voting_amount','$description','$candidate_name','$pic_name','$product_id', '$price_id')") or die ("query incorrect");
 
 echo "Product added successfully.";
 }
+
+mysqli_query($con,"insert into total_vote (candidate_name) values 
+('$candidate_name')") or die ("query incorrect");
 
 mysqli_close($con);
 }
@@ -101,13 +103,7 @@ include "topheader.php";
                                             class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Voting Count</label>
-                                        <input type="text" id="voting_count" name="voting_count" required
-                                            class="form-control">
-                                    </div>
-                                </div>
+
                             </div>
 
 

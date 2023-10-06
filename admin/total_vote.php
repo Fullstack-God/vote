@@ -35,7 +35,7 @@ include "topheader.php";
             <div class="col-md-6">
                 <div class="header-search">
                     <form action="" method="POST">
-                        <input class="input" id="search" name="search" type="text" placeholder="Search here"
+                        <input class="input" id="search" name="search" type="text" placeholder="Enter the Full Name!"
                             style="border-radius:20px; width:60%;height:50px;padding-left:15px;">
                         <button type="submit" id="search_btn" name="search_btn" class="search-btn"
                             style="border: none;background-color: unset;"></button>
@@ -49,17 +49,9 @@ include "topheader.php";
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Vote History</h4>
+                        <h4 class="card-title">Total Vote</h4>
                     </div>
-                    <div id="editModal" class="modal">
-                        <!-- Modal content -->
-                        <form method="post" action="update.php">
-                            <input type="hidden" id="editCandidateId" name="editCandidateId">
-                            <input type="hidden" id="editColumnName" name="editColumnName">
-                            <input type="text" id="editColumnValue" name="editColumnValue">
-                            <button type="submit">Update</button>
-                        </form>
-                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive ps">
                             <table class="table table-hover tablesorter " id="">
@@ -73,8 +65,10 @@ include "topheader.php";
                                 </thead>
                                 <tbody>
                                     <?php
+                                    // Assuming you have a valid database connection object named $con
+
                                     if (isset($_POST['search_btn'])) {
-                                        $query = mysqli_real_escape_string($con, $_POST['search']);
+                                        $query = $_POST['search'];
 
                                         // Pagination configuration
                                         $recordsPerPage = 10; // Number of records to display per page
@@ -83,9 +77,12 @@ include "topheader.php";
                                         // Calculate the OFFSET for pagination
                                         $offset = ($currentPage - 1) * $recordsPerPage;
 
-                                        // Fetch the records with pagination
-                                        $search_query = "SELECT * FROM total_vote WHERE candidate_name = '$query' LIMIT $recordsPerPage OFFSET $offset";
-                                        $run = mysqli_query($con, $search_query) or die("Query incorrect");
+                                        // Prepare the search query with a placeholder
+                                        $search_query = "SELECT * FROM total_vote WHERE candidate_name = ? LIMIT ? OFFSET ?";
+                                        $stmt = mysqli_prepare($con, $search_query);
+                                        mysqli_stmt_bind_param($stmt, 'sii', $query, $recordsPerPage, $offset);
+                                        mysqli_stmt_execute($stmt);
+                                        $run = mysqli_stmt_get_result($stmt);
 
                                         if (mysqli_num_rows($run) > 0) {
                                             while ($row = mysqli_fetch_array($run)) {
@@ -114,24 +111,23 @@ include "topheader.php";
                                             $totalRecords = mysqli_num_rows(mysqli_query($con, "SELECT * FROM total_vote WHERE candidate_name = '$query'"));
                                             $totalPages = ceil($totalRecords / $recordsPerPage);
                                             echo "<div class='pagination' style='justify-content:center;'>";
-                                                if ($currentPage > 1) {
-                                                    echo "<a href='?page=" . ($currentPage - 1) . "' style=' font-size: x-large;
-                                                    margin-right: 20px;' >&laquo; Previous</a>";
-                                                }
-                                                for ($i = 1; $i <= $totalPages; $i++) {
-                                                    echo "<a href='?page=" . $i . "'" . ($currentPage == $i ? " class='active'" : "") . " style=' font-size: x-large;
-                                                    margin-right: 20px;'>" . $i . "</a>";
-                                                }
-                                                if ($currentPage < $totalPages) {
-                                                    echo "<a href='?page=" . ($currentPage + 1) . "' style=' font-size: x-large;
-                                                    margin-right: 20px;'>Next &raquo;</a>";
-                                                }
-                                                echo "</div>";
-                                            } else {
-                                                echo "No results found.";
+                                            if ($currentPage > 1) {
+                                                echo "<a href='?page=" . ($currentPage - 1) . "' style=' font-size: x-large;
+                                                margin-right: 20px;' >&laquo; Previous</a>";
                                             }
+                                            for ($i = 1; $i <= $totalPages; $i++) {
+                                                echo "<a href='?page=" . $i . "'" . ($currentPage == $i ? " class='active'" : "") . " style=' font-size: x-large;
+                                                margin-right: 20px;'>" . $i . "</a>";
+                                            }
+                                            if ($currentPage < $totalPages) {
+                                                echo "<a href='?page=" . ($currentPage + 1) . "' style=' font-size: x-large;
+                                                margin-right: 20px;'>Next &raquo;</a>";
+                                            }
+                                            echo "</div>";
+                                        } else {
+                                            echo "No results found.";
+                                        }
                                     } else {
-
                                         // Pagination configuration
                                         $recordsPerPage = 10; // Number of records to display per page
                                         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -139,8 +135,11 @@ include "topheader.php";
                                         // Calculate the OFFSET for pagination
                                         $offset = ($currentPage - 1) * $recordsPerPage;
 
-                                        $query = "SELECT * FROM total_vote LIMIT $recordsPerPage OFFSET $offset";
-                                        $run = mysqli_query($con, $query);
+                                        $query = "SELECT * FROM total_vote LIMIT ? OFFSET ?";
+                                        $stmt = mysqli_prepare($con, $query);
+                                        mysqli_stmt_bind_param($stmt, 'ii', $recordsPerPage, $offset);
+                                        mysqli_stmt_execute($stmt);
+                                        $run = mysqli_stmt_get_result($stmt);
 
                                         if (mysqli_num_rows($run) > 0) {
                                             while ($row = mysqli_fetch_array($run)) {
@@ -168,23 +167,22 @@ include "topheader.php";
                                             $totalRecords = mysqli_num_rows(mysqli_query($con, "SELECT * FROM total_vote"));
                                             $totalPages = ceil($totalRecords / $recordsPerPage);
                                             echo "<div class='pagination' style='justify-content:center;'>";
-                                                if ($currentPage > 1) {
-                                                    echo "<a href='?page=" . ($currentPage - 1) . "' style=' font-size: x-large;
-                                                    margin-right: 20px;' >&laquo; Previous</a>";
-                                                }
-                                                for ($i = 1; $i <= $totalPages; $i++) {
-                                                    echo "<a href='?page=" . $i . "'" . ($currentPage == $i ? " class='active'" : "") . " style=' font-size: x-large;
-                                                    margin-right: 20px;'>" . $i . "</a>";
-                                                }
-                                                if ($currentPage < $totalPages) {
-                                                    echo "<a href='?page=" . ($currentPage + 1) . "' style=' font-size: x-large;
-                                                    margin-right: 20px;'>Next &raquo;</a>";
-                                                }
-                                                echo "</div>";
-                                            } else {
-                                                echo "No results found.";
+                                            if ($currentPage > 1) {
+                                                echo "<a href='?page=" . ($currentPage - 1) . "' style=' font-size: x-large;
+                                                margin-right: 20px;' >&laquo; Previous</a>";
                                             }
-                                       
+                                            for ($i = 1; $i <= $totalPages; $i++) {
+                                                echo "<a href='?page=" . $i . "'" . ($currentPage == $i ? " class='active'" : "") . " style=' font-size: x-large;
+                                                margin-right: 20px;'>" . $i . "</a>";
+                                            }
+                                            if ($currentPage < $totalPages) {
+                                                echo "<a href='?page=" . ($currentPage + 1) . "' style=' font-size: x-large;
+                                                margin-right: 20px;'>Next &raquo;</a>";
+                                            }
+                                            echo "</div>";
+                                        } else {
+                                            echo "No results found.";
+                                        }
                                     }
                                     ?>
 
