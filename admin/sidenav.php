@@ -24,7 +24,8 @@
 
 <body class="dark-edition">
     <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="black" data-image="./assets/img/sidebar-2.jpg">
+        <div id="sidebar" class="sidebar" data-color="purple" data-background-color="black"
+            data-image="./assets/img/sidebar-2.jpg">
 
             <div class="sidebar-wrapper">
                 <ul class="nav">

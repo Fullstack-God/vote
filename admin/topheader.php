@@ -9,7 +9,8 @@
 
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
-                aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
+                aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example"
+                onclick="sidebar()">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="navbar-toggler-icon icon-bar"></span>
                 <span class="navbar-toggler-icon icon-bar"></span>
@@ -29,3 +30,10 @@
             </div>
         </div>
     </nav>
+    <script>
+        function sidebar() {
+            sidebar = document.getElementById("sidebar")
+            sidebar.style.right = "unset"
+            sidebar.style.left = "-257px"
+        }
+    </script>
