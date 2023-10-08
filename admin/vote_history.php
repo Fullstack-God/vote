@@ -1,60 +1,39 @@
 <?php
-session_start();
+
 include("../db.php");
-
-error_reporting(0);
-if(isset($_GET['action']) && $_GET['action']!="" && $_GET['action']=='delete')
-{
-$voter_id=$_GET['voter_id'];
-
-/*this is delet query*/
-mysqli_query($con,"delete from orders where voter_id='$voter_id'")or die("delete query is incorrect...");
-} 
-
-///pagination
-$page=$_GET['page'];
-
-if($page=="" || $page=="1")
-{
-$page1=0; 
-}
-else
-{
-$page1=($page*10)-10; 
-}
-
 include "sidenav.php";
 include "topheader.php";
 
-?>
+if (isset($_SESSION['success'])) {
+    echo "
 <!-- End Navbar -->
-<div class="content">
-    <div class="container-fluid">
+<div class='content'>
+    <div class='container-fluid'>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="header-search">
-                    <form action="" method="POST">
-                        <input class="input" id="search" name="search" type="text" placeholder="Enter the Full Name!"
-                            style="border-radius:20px; width:60%;height:50px;padding-left:15px;">
-                        <button type="submit" id="search_btn" name="search_btn" class="search-btn"
-                            style="border: none;background-color: unset;"></button>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='header-search'>
+                    <form action='' method='POST'>
+                        <input class='input' id='search' name='search' type='text' placeholder='Enter the Full Name!'
+                            style='border-radius:20px; width:60%;height:50px;padding-left:15px;'>
+                        <button type='submit' id='search_btn' name='search_btn' class='search-btn'
+                            style='border: none;background-color: unset;'></button>
                     </form>
                 </div>
             </div>
         </div>
 
         <!-- your content here -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card ">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Vote History</h4>
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='card '>
+                    <div class='card-header card-header-primary'>
+                        <h4 class='card-title'>Vote History</h4>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive ps">
-                            <table class="table table-hover tablesorter " id="">
-                                <thead class=" text-primary">
+                    <div class='card-body'>
+                        <div class='table-responsive ps'>
+                            <table class='table table-hover tablesorter ' id=''>
+                                <thead class=' text-primary'>
                                     <tr>
                                         <th>Voter Id</th>
                                         <th>Candidate Name</th>
@@ -62,8 +41,7 @@ include "topheader.php";
                                         <th>Date</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
+                                <tbody>";
                                         if (isset($_POST['search_btn'])) {
                                             $query = mysqli_real_escape_string($con, $_POST['search']);
 
@@ -163,20 +141,17 @@ include "topheader.php";
                                                 echo "No results found.";
                                             }
                                         }
-                                        ?>
-
-
-
+                                      echo"
 
                                 </tbody>
 
                             </table>
 
-                            <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                                <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                            <div class='ps__rail-x' style='left: 0px; bottom: 0px;'>
+                                <div class='ps__thumb-x' tabindex='0' style='left: 0px; width: 0px;'></div>
                             </div>
-                            <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                                <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                            <div class='ps__rail-y' style='top: 0px; right: 0px;'>
+                                <div class='ps__thumb-y' tabindex='0' style='top: 0px; height: 0px;'></div>
                             </div>
                         </div>
                     </div>
@@ -186,4 +161,8 @@ include "topheader.php";
         </div>
 
     </div>
-</div>
+</div>";
+    }else{
+        include 'login.php';
+    }
+?>

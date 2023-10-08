@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2023 at 03:22 PM
+-- Generation Time: Oct 07, 2023 at 07:38 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,8 +18,30 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `image-vote`
+-- Database: `vote`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_info`
+--
+
+CREATE TABLE `admin_info` (
+  `user_id` int(100) NOT NULL,
+  `username` char(255) NOT NULL,
+  `email` char(255) NOT NULL,
+  `password` char(255) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin_info`
+--
+
+INSERT INTO `admin_info` (`user_id`, `username`, `email`, `password`, `date`) VALUES
+(1, 'asd', 'smithchao0513@gmail.com', '4297f44b13955235245b2497399d7a93', '2023-10-07'),
+(2, 'qwe', 'adsd@gmail.com', '4297f44b13955235245b2497399d7a93', '2023-10-07');
 
 -- --------------------------------------------------------
 
@@ -129,11 +151,20 @@ INSERT INTO `voter` (`voter_id`, `candidate_name`, `email`, `price_id`, `date`) 
 (10, 'Ralph EI halaby', 'captivity_coping790@simplelogin.com', 'price_1NxinzKFUyNj0BfH0uqUOR2F', '2023-10-05 14:47:08.252660'),
 (11, 'Ralph EI halaby', 'smithchao0513@gmail.com', 'price_1NxinzKFUyNj0BfH0uqUOR2F', '2023-10-05 14:51:01.540838'),
 (12, 'Mario EI Hajj', 'isaqukon@linux0.net', 'price_1NxiptKFUyNj0BfHzoKQy8Q1', '2023-10-05 15:38:37.630540'),
-(13, 'Joseph Bou Rached', 'isaqukon@linux0.net', 'price_1NxiqrKFUyNj0BfH7VAiIWSD', '2023-10-05 15:50:34.419936');
+(13, 'Joseph Bou Rached', 'isaqukon@linux0.net', 'price_1NxiqrKFUyNj0BfH7VAiIWSD', '2023-10-05 15:50:34.419936'),
+(14, 'Ali Ahmad', 'isaqukon@linux0.net', 'price_1NxioTKFUyNj0BfHe49ek8ZC', '2023-10-07 06:05:49.374286'),
+(15, 'Ralph EI halaby', 'isaqukon@linux0.net', 'price_1NxinzKFUyNj0BfH0uqUOR2F', '2023-10-07 08:41:45.653992'),
+(16, 'Ali Ahmad', 'smithchao0513@gmail.com', 'price_1NxioTKFUyNj0BfHe49ek8ZC', '2023-10-07 08:53:38.888652');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin_info`
+--
+ALTER TABLE `admin_info`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `photos`
@@ -158,6 +189,12 @@ ALTER TABLE `voter`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_info`
+--
+ALTER TABLE `admin_info`
+  MODIFY `user_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
@@ -173,7 +210,7 @@ ALTER TABLE `total_vote`
 -- AUTO_INCREMENT for table `voter`
 --
 ALTER TABLE `voter`
-  MODIFY `voter_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `voter_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

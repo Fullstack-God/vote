@@ -146,13 +146,13 @@ session_start();
         <!-- MAIN HEADER -->
         <div id="header">
             <!-- container -->
-            <div class="container">
+            <div class="container" style="width:100%;">
                 <!-- row -->
                 <div class="row">
                     <!-- LOGO -->
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="margin-left:100px;">
                         <div class="header-logo">
-                            <a href="#" class="logo">
+                            <a href="#" class="logo ">
                                 <font style="font-style:normal; font-size: 33px;color: aliceblue;font-family: serif">
                                     Candidate Vote
                                 </font>
@@ -169,7 +169,7 @@ session_start();
                     <!-- /SEARCH BAR -->
 
                     <!-- ACCOUNT -->
-                    <div class="col-md-3 clearfix">
+                    <!-- <div class="col-md-3 clearfix">
                         <div class="header-ctn">
 
 
@@ -185,7 +185,7 @@ session_start();
 
 
                         </div>
-                    </div>
+                    </div> -->
                     <!-- /ACCOUNT -->
                 </div>
                 <!-- row -->
